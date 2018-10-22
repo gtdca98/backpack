@@ -1,0 +1,370 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <style type="text/css">
+
+      .carousel {
+        width:100%;
+        
+      }
+
+      .imgmex{
+        background-image: url("img/Mexico_city_ap0013.jpg");
+        width: 100%;
+      }
+      .imag:hover{
+        width: 42%; 
+      }
+
+      * {box-sizing: border-box;}
+
+      .img-magnifier-container {
+        position:relative;
+      }
+
+      .img-magnifier-glass {
+        position: absolute;
+        border: 3px solid #000;
+        border-radius: 50%;
+        cursor: none;
+        /*Set the size of the magnifier glass:*/
+        width: 100px;
+        height: 100px;
+      }
+
+      .diex{
+
+        margin-left: 5%;
+        margin-right: 5%;
+      }
+
+
+    </style>
+    .
+    <script type="text/javascript">
+      var mochila =1;
+      var Actividad1= "";
+      var Actividad2= "";
+      var Pasatiempo="";
+      var Tiempo = 8;
+      var Transporte="";
+
+      var mensaje01= ""
+
+       var arrayhob=[
+          ["01","gimnasio","tu toalla, tu cantimplora o shaker y tus vitaminas","vayas a jalar."],
+          ["02","cross fit","tus tenis y tu magnesia", "hagas tus WOD."],
+          ["03","cheer","tus tenis, tu cantimplora, tus pasadores y ligas", "estés en el mat."],
+          ["04","fútbol","tus tachos, espinilleras y calcetas", 'estés en la cancha.'],
+          ["05","básquet","tus tenis, tu cantimplora y tu balón", "estés en la duela."],
+          ["06","ping pong","tus palas, pelotas y toalla", "hagas el backspin."],
+          ["07","atletismo","tus tenis, audífonos y contimplora", "estés en la pista."],
+          ["08","pintura / dibujo","un sketchbook, tus lápices, estilógrafos", "dibujes."],
+          ["09","danza","tus zapatillas y ligas", "'no puedo, tengo ensayo'."],
+          ["10","música","tus notas, cañas o breas", "tengas ensayo."],
+          ["11","arquitectura","tus escuadras, regla T y lápices", "levantes el plano."],
+          ["12","electrónica","tus protos y tu caja de componentes", "'¡ay! me da negativo'."]
+        ]
+
+       var arraytime = [
+          [2,"sales por lo necesario ", " tamaño cómodo y bolsas de rápido acceso." ],
+          [4,"sales por lo necesario ", " tamaño cómodo y bolsas de rápido acceso." ],
+          [6,"necesitas estar afuera"," tirantes reforzados y cierres de doble sentido en cada sección." ],
+          [8,"necesitas estar afuera"," tirantes reforzados y cierres de doble sentido en cada sección." ],
+          [10,"te la vives afuera","tirantes reforzados y acolchonados, mayor capacidad y una batería portátil para celular." ],
+          [12,"te la vives afuera","tirantes reforzados y acolchonados, mayor capacidad y una batería portátil para celular." ],
+          [14,"te la vives afuera","tirantes reforzados y acolchonados, mayor capacidad y una batería portátil para celular."  ]
+
+       ]
+
+       var arraytrans = [
+          ["B","es impermeable, tiene retroreflectantes, canales de ventilación en la espalda, ajuste a la cintura, y broches para tu cadena y casco","bici."],
+          ["A","tiene bolsa en la tapa para las llaves y acceso lateral para paraguas","coche."],
+          ["P","es impermeable, tiene cierres de seguridad cubiertos, monedero y tarjetero de acceso rápido ","transporte público."]
+       ]
+
+
+      function muestra(imagen){
+        $("#foto").attr("src", imagen);
+        $("#fotorel").text(" La imagen corresponde al producto: " + imagen);
+      };
+
+      function ajustaInp(valor){
+        $("#inputMulti").text(valor);
+        Tiempo = valor;
+        if  (Actividad1 != "" & Actividad2 != "" & Pasatiempo != "" & Transporte != "" ) {califica(22)}
+      }
+      function act2(valor){
+         Actividad2 = valor;
+         if  (Actividad1 != "" & Actividad2 != "" & Pasatiempo != "" & Transporte != "" ) {califica(22)}
+       }
+      function hob(valor){
+         Pasatiempo = valor;
+         if  (Actividad1 != "" & Actividad2 != "" & Pasatiempo != "" & Transporte != "" ) {califica(22)}
+       }
+       function tra(valor){
+         Transporte= valor; 
+         if  (Actividad1 != "" & Actividad2 != "" & Pasatiempo != "" & Transporte != "" ) {califica(22)}
+       }
+
+      function ajusta2(valor){
+         Actividad1 = valor;
+          var salida = "";
+          var opt1= '<input type="radio" name="Act2" value="e" onchange="act2(this.value)"> Estudias<br>';
+          var opt2= '<input type="radio" name="Act2" value="g" onchange="act2(this.value)"> Eres godín<br>';
+          var opt3= '<input type="radio" name="Act2" value="f" onchange="act2(this.value)"> Eres freelancer';
+      if (valor == "E"){
+          salida = "<h4>y además: </h4>" + opt2 + opt3;
+        }
+      if (valor == "G"){
+          salida = "<h4>y además: </h4>" + opt1 + opt3;
+        }
+      if (valor == "F"){
+          salida = "<h4>y además: </h4>" + opt1 + opt2;
+        }
+        $("#actsec").empty();
+        $("#actsec").append(salida);
+        Actividad2 = "";
+
+      }
+
+      Array.prototype.clean = function(deleteValue) {
+        for (var i = 0; i < this.length; i++) {
+          if (this[i] == deleteValue) {         
+            this.splice(i, 1);
+            i--;
+          }
+        }
+        return this;
+      };
+
+
+
+      function califica(valor){
+        
+        var desc1="";
+        var desc2="";
+         desc1 = Actividad1 == "E" ? "estudiante" : ( Actividad1 == "G" ? "godín" : "freelancer" ) ;
+         desc2 = Actividad2 == "e" ? " estudiante" :  (Actividad2 == "g" ? "godín" : "freelancer" )
+         desc3= arrayhob.map(function(x){ if(x[0]==Pasatiempo){return x[2]}}).clean(undefined)
+         desc4= arrayhob.map(function(x){ if(x[0]==Pasatiempo){return x[3]}}).clean(undefined)
+         desc5= arraytime.map(function(x){ if(x[0]==Tiempo){return x[1]}}).clean(undefined)
+         desc6= arraytime.map(function(x){ if(x[0]==Tiempo){return x[2]}}).clean(undefined)
+         desc7= arraytrans.map(function(x){ if(x[0]==Transporte){return x[1]}}).clean(undefined)
+         desc8= arraytrans.map(function(x){ if(x[0]==Transporte){return x[2]}}).clean(undefined)
+
+
+        mensaje01 = "<h4> !Ésta es la <b>Saccus</b> que tenemos para tí ! </h4><br><p> La <b>Saccus</b> " + Actividad1 +""+ Actividad2 +""+ Pasatiempo +""+ Tiempo +""+ Transporte  + " esta pensada para tus nececidades como " + desc1  + " pero sin dejar de lado esa parte " +  desc2+ " que tanto te complementa <br> Le añadimos compartimentos para "+ desc3 +" que sabemos que necesitarás cuando "+ desc4  +  "<br> Como "+ desc5 + " tu <b>Saccus</b> tiene " + desc6 + ". <br> También "+ desc7 +" cuando vas en "+desc8 +"</p>";
+        
+        $("#msg01").empty();
+        $("#msg01").append(mensaje01);
+
+        
+
+        muestra("img/Mission_Workshop_The_Fraction.png")
+
+        if(Tiempo < 5){muestra("img/Mission_Workshop_The_Fraction.png")}
+        if(Tiempo > 9 | Pasatiempo =="04" | Pasatiempo =="05" | Pasatiempo =="06" | Pasatiempo =="07"){muestra("img/Mystery_Ranch_Stadt_Backpack.png")} 
+        if(Pasatiempo =="01" | Pasatiempo =="02"){muestra("img/Topo_Design.jpg")}
+          if(Pasatiempo =="03" ){muestra("img/Nfinity.jpg")}
+        if(Pasatiempo =="09" | Pasatiempo =="09" | Pasatiempo =="10" | Pasatiempo =="11"){muestra("img/Adidas_Atric_Grande.png")}
+         if(Pasatiempo==12 | Actividad1 == "G" ){muestra("img/Hedgren_PRIME_Backpack.jpg")}
+        if(Transporte=="B"){muestra("img/Spreyground.jpg")}         
+      }
+
+
+
+    </script>
+
+    <title>Saccus</title>
+  </head>
+  <body>
+
+<nav class="navbar fixed-top navbar-light bg-dark " >
+  <div class="row">
+    <div class="col-xs-3 col-sm-3 col-md-3 col-xl-3 mb-2"> ></div>  
+    <div class="col-xs-6 col-sm-6 col-md-6 col-xl-6 mb-2"> 
+      <h1 class="text-center text-white ">Saccus</h1> 
+    </div>  
+    <div class="col-xs-3 col-sm-3 col-md-3 col-xl-3 mb-2"> </div>  
+  </div>
+
+  <a class="nav-link text-light" href="#creaS">Crea tu Saccus</a>
+  <a class="nav-link text-light" href="#aboutus">Quienes somos</a>
+  <a class="navbar-brand text-white " href="#abajo">2DbucheConTodo.inc  CDMX</a>
+</nav>  
+      <div class= "imgmex">
+        <img  src="img/Mexico_city_ap0013.jpg" width="100%"  >
+      </div>
+
+
+    <div id="creaS" class = "diex">
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+
+        
+      <h1><b>Saccus</b></h1>
+
+        <h2>Crea tu <b>Saccus</b></h2>
+        <h3>Llena el formulario para conocerte mejor</h3>
+        <h6>Estás a unos pasos de la mejor backpack para ti</h6>
+      <hr>
+      <div class="row">
+        <div class="col-xs-12 col-sm-6 col-md-3 col-xl-2 mb-2">
+          <div >
+            <h4>Te consideras principalmente: </h4>
+             <input type="radio" name="Act1" value="E" onchange="ajusta2(this.value)"> Estudiante<br>
+              <input type="radio" name="Act1" value="G"  onchange="ajusta2(this.value)"> Godín<br>
+              <input type="radio" name="Act1" value="F" onchange="ajusta2(this.value)"> Freelancer
+          </div>
+        </div>
+        <div class="col-xs-12 col-sm-6 col-md-3 col-xl-2 mb-2">
+          <div id= "actsec">
+            <h4>y además: </h4>
+              <input type="radio" name="Act2" value="e" onchange="act2(this.value)"> Estudias<br>
+              <input type="radio" name="Act2" value="g" onchange="act2(this.value)"> Eres godín<br>
+              <input type="radio" name="Act2" value="f" onchange="act2(this.value)"> Eres freelancer
+          </div>
+        </div>
+        <div class="col-xs-12 col-sm-6 col-md-3 col-xl-2 mb-2">
+          <div >
+            <h4>Hobbies </h4>
+              <h6>Ejercicio</h6>
+              <input type="radio" name="Hobbie" value="01" onchange="hob(this.value)"> Gimnasio<br>
+              <input type="radio" name="Hobbie" value="02" onchange="hob(this.value)"> Cross Fit<br>
+              <br>
+              <h6>Haces deporte</h6>
+              <input type="radio" name="Hobbie" value="03" onchange="hob(this.value)"> Cheer<br>
+              <input type="radio" name="Hobbie" value="04" onchange="hob(this.value)"> Fútbol<br>
+              <input type="radio" name="Hobbie" value="05" onchange="hob(this.value)"> Básquet<br>
+              <input type="radio" name="Hobbie" value="06" onchange="hob(this.value)"> Ping Pong<br>
+              <input type="radio" name="Hobbie" value="07" onchange="hob(this.value)"> Atletismo<br>
+          </div>
+        </div>
+        <div class="col-xs-12 col-sm-6 col-md-3 col-xl-2 mb-2">
+          <div >
+            <h4>....... </h4>
+              <h6>Practicas un arte</h6>
+              <input type="radio" name="Hobbie" value="08" onchange="hob(this.value)"> Pintura / dibujo<br>
+              <input type="radio" name="Hobbie" value="09" onchange="hob(this.value)"> Danza<br>
+              <input type="radio" name="Hobbie" value="10" onchange="hob(this.value)"> Música<br>
+              <input type="radio" name="Hobbie" value="11" onchange="hob(this.value)"> Arquitectura<br>
+              <br>
+              <h6>Laboratorios</h6>
+              <input type="radio" name="Hobbie" value="12" onchange="hob(this.value)"> Electrónica<br>
+          </div>
+        </div>
+        <div class="col-xs-12 col-sm-6 col-md-3 col-xl-2 mb-2">
+          <div >
+            <h4>Estilo de vida</h4>
+              Cuántas horas pasas afuera de tu casa: <br>
+              <input type="range" name="tiempo" min="2" max="14" step=2 oninput="ajustaInp(this.value)">
+             <span id = "inputMulti" > 8 </span> 
+            <br>
+            <h6>Medios de transporte</h6>
+              <input type="radio" name="transporte" value="B" onchange="tra(this.value)"> Bicicleta<br>
+              <input type="radio" name="transporte" value="A" onchange="tra(this.value)"> Auto particular<br>
+              <input type="radio" name="transporte" value="P" onchange="tra(this.value)"> Transporte público<br>
+
+          </div>
+        </div>
+      </div>
+      <br>
+      <br>
+      <br>
+      <br>
+
+      <div class="row">
+        <div class="col-xs-6 col-sm-6 col-md-6 col-xl-6 mb-12">
+          <div id="msg01">
+             
+          </div>
+          <h6 id="fotorel"></h6>
+        </div>
+
+        <div class="col-xs-6 col-sm-6 col-md-6 col-xl-6 mb-12">
+          <div >
+             <img id="foto" src="img/imagen00.png" height="350px"  >
+          </div>
+        </div>
+
+      </div>
+      <br>
+      <br>
+
+      <br>
+      <br>
+      <br>
+      <div id="aboutus">
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+        <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+          <ol class="carousel-indicators">
+            <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+            <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+            <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+          </ol>
+          <div class="carousel-inner">
+            <div class="carousel-item active">
+              <img class="d-block w-100" src="img/Aboutus01.jpg" alt="First slide">
+            </div>
+            <div class="carousel-item">
+              <img class="d-block w-100" src="img/Aboutus02.jpg" alt="Second slide">
+            </div>
+            <div class="carousel-item">
+              <img class="d-block w-100" src="img/Aboutus03.jpg" alt="Third slide">
+            </div>
+          </div>
+          <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+          </a>
+          <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+          </a>
+        </div>
+      </div>
+
+    <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+  
+    </div>
+      <div id="abajo" class="card-footer text-muted bg-secondary">
+        <span class="text-white">2DbucheConTodo.inc CDMX <br><b>Saccus</b>b> es una marca registrada en México con derechos de comercializacíon. <br> Todos los derechos reservados 2018 - limitado al clusulado siguiente -.  <p>El presente constituye una simulación para fines educativos, no representa una oferta de venta ni de ejercicio  del derecho comercial respecto del contenido que se muestra</p>
+</span>
+
+      </div>
+
+
+    
+    <!-- Optional JavaScript -->
+
+
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+
+
+  </body>
+</html>
