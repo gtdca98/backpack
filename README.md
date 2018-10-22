@@ -1,2 +1,0 @@
-# backpack
-Documentacion para Backpack
